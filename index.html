@@ -12,13 +12,26 @@
         /* GIỮ NGUYÊN TOÀN BỘ CSS */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Dancing Script' sans-serif;
-            background: linear-gradient(135deg, #0f3b1e 0%, #1a5f2a 30%, #0d2d1a 100%);
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+    font-family: 'Dancing Script' sans-serif;
+    background: linear-gradient(135deg, 
+        #0c2b1c 0%, 
+        #1a472a 25%, 
+        #0d3b23 50%, 
+        #1e5a34 75%, 
+        #0f2e1b 100%);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
         .snowflakes {
             position: fixed;
             top: 0;
@@ -507,6 +520,7 @@ Merry Christmas, tình yêu của anh. 🎄
 </body>
 
 </html>
+
 
 
 
