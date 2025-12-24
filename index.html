@@ -3,418 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy One Month Anniversary ❤️ | Anh Nguyên</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Happy 1 Month Anniversary ❤️ | Anh Nguyên</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            background: 
-                /* Nền lãng mạn - gradient hồng tím */
-                linear-gradient(135deg, 
-                    #1a0b2e 0%,
-                    #3d0b43 25%,
-                    #6a0dad 50%,
-                    #c2185b 75%,
-                    #ff4081 100%);
-            background-attachment: fixed;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Hiệu ứng trái tim bay */
-        .hearts {
+        :root {
+            --rose-50: #fff1f2;
+            --rose-100: #ffe4e6;
+            --rose-200: #fecdd3;
+            --rose-300: #fda4af;
+            --rose-400: #fb7185;
+            --rose-500: #f43f5e;
+            --rose-600: #e11d48;
+            --rose-700: #be123c;
+            --cream: #fef7f0;
+            --burgundy: #722f37;
+            --gold: #d4a574;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--rose-50) 100%);
+            color: var(--burgundy);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Floating Hearts */
+        .floating-hearts {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1000;
             overflow: hidden;
         }
 
         .heart {
             position: absolute;
-            color: #ff4081;
             font-size: 20px;
-            opacity: 0;
-            animation: floatHeart 15s linear infinite;
+            animation: float-up 8s linear infinite;
+            opacity: 0.7;
         }
 
-        @keyframes floatHeart {
+        @keyframes float-up {
             0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
+                transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
             10% {
-                opacity: 1;
+                opacity: 0.7;
             }
             90% {
-                opacity: 1;
+                opacity: 0.7;
             }
             100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                transform: translateY(-100px) rotate(360deg);
                 opacity: 0;
             }
         }
 
-        /* Hiệu ứng ánh sáng lấp lánh */
-        .sparkles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .sparkle {
-            position: absolute;
-            background-color: #fff;
-            border-radius: 50%;
-            animation: sparkle 2s infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Đèn trang trí lãng mạn */
-        .romantic-lights {
-            position: fixed;
-            width: 100%;
-            height: 30px;
-            top: 0;
-            z-index: 1;
-            pointer-events: none;
-            background: linear-gradient(90deg, 
-                #ff4081, #e91e63, #9c27b0, #673ab7, #ff4081,
-                #e91e63, #9c27b0, #673ab7, #ff4081, #e91e63);
-            background-size: 200% 100%;
-            animation: lightMove 8s linear infinite;
-            opacity: 0.6;
-            filter: blur(1px);
-            box-shadow: 0 0 30px rgba(255, 64, 129, 0.5);
-        }
-
-        @keyframes lightMove {
-            0% { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        /* Container chính */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Header */
-        .header {
+        /* Hero Section với style thiệp */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 50px 30px;
             background: linear-gradient(135deg, 
-                rgba(255, 64, 129, 0.6) 0%, 
-                rgba(156, 39, 176, 0.6) 100%);
-            border-radius: 25px;
-            margin-bottom: 50px;
-            border: 3px solid #ffd700;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.5),
-                0 0 50px rgba(255, 215, 0, 0.4),
-                inset 0 0 40px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
+                rgba(255, 241, 242, 0.9) 0%, 
+                rgba(255, 228, 230, 0.9) 50%, 
+                rgba(254, 247, 240, 0.9) 100%);
+            padding: 2rem;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
-        .header::before {
+        .hero::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, 
-                rgba(255, 215, 0, 0.1) 0%, 
-                rgba(255, 64, 129, 0.1) 30%, 
-                transparent 70%);
-            animation: rotate 30s linear infinite;
+            background: radial-gradient(circle, var(--rose-200) 0%, transparent 70%);
+            opacity: 0.3;
+            animation: pulse-glow 4s ease-in-out infinite;
         }
 
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
         }
 
-        .title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4.5rem;
-            color: #ffd700;
-            margin-bottom: 20px;
-            text-shadow: 
-                3px 3px 0 #9c27b0,
-                0 0 40px rgba(255, 215, 0, 0.9),
-                0 0 80px rgba(255, 215, 0, 0.6);
-            position: relative;
-            z-index: 2;
-        }
-
-        .love-name { 
-            color: #ff4081; 
-            text-shadow: 
-                3px 3px 0 #9c27b0,
-                0 0 30px rgba(255, 64, 129, 1);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-top: 10px;
-            font-family: 'Dancing Script', cursive;
-            text-shadow: 2px 2px 0 #9c27b0;
-        }
-
-        .decoration {
-            margin-top: 25px;
-            font-size: 2.5rem;
-            color: #ff4081;
-            position: relative;
-            z-index: 2;
-        }
-
-        .decoration i {
-            margin: 0 20px;
-            animation: float 3s ease-in-out infinite;
-            text-shadow: 0 0 20px rgba(255, 64, 129, 0.9);
-        }
-
-        /* Gallery */
-        .gallery {
-            margin: 50px 0;
-            padding: 40px;
-            background: rgba(156, 39, 176, 0.3);
-            border-radius: 25px;
-            border: 2px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-        }
-
-        .gallery h2 {
-            text-align: center;
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            color: #ffd700;
-            margin-bottom: 40px;
-            text-shadow: 3px 3px 0 #9c27b0;
-        }
-
-        /* Layout 2x2 cho 4 ảnh */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .photo-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            height: 320px;
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .photo-item:hover {
-            transform: translateY(-10px) scale(1.03);
-            border-color: #ffd700;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.5);
-        }
-
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .photo-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .photo-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(156, 39, 176, 0.85), transparent);
-            padding: 20px;
+        .date-range {
+            background: linear-gradient(135deg, var(--rose-400), var(--rose-500));
             color: white;
-            font-size: 1.1rem;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: #ffd700;
-            font-size: 1.8rem;
-        }
-
-        /* Message */
-        .message {
-            margin: 70px 0;
-        }
-
-        .message h2 {
-            text-align: center;
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            color: #ffd700;
-            margin-bottom: 40px;
-            text-shadow: 3px 3px 0 #9c27b0;
-        }
-
-        .message-box {
-            background: rgba(156, 39, 176, 0.3);
-            border-radius: 25px;
-            padding: 50px;
-            border: 2px solid #ff4081;
-            max-width: 850px;
-            margin: 0 auto;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            animation: fade-in-up 1s ease-out;
             position: relative;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+            font-weight: 500;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(251, 113, 133, 0.3);
         }
 
-        #typedText {
-            min-height: 250px;
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
-            color: #fff;
-            text-align: justify;
-            line-height: 1.8;
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            color: var(--rose-600);
+            margin-bottom: 1rem;
+            animation: fade-in-up 1s ease-out 0.2s backwards;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .signature {
-            text-align: right;
-            margin-top: 50px;
-            font-style: italic;
-        }
-
-        .signature-name {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            color: #ff4081;
-            font-weight: bold;
-            text-shadow: 2px 2px 0 #9c27b0;
-        }
-
-        .message-decoration {
+        .couple-names {
             display: flex;
-            justify-content: center;
-            margin-top: 40px;
-            font-size: 2.5rem;
-            color: #ff4081;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--burgundy);
+            margin-bottom: 2rem;
+            animation: fade-in-up 1s ease-out 0.4s backwards;
+            position: relative;
+            z-index: 1;
         }
 
-        .message-decoration i {
-            margin: 0 20px;
-            animation: heartbeat 1.5s infinite;
-        }
-
-        /* Memory Counter */
-        .memory-counter {
-            margin: 70px 0;
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(156, 39, 176, 0.4), rgba(255, 64, 129, 0.3));
-            border-radius: 25px;
-            border: 2px solid #ffd700;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-        }
-
-        .memory-counter h2 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            color: #ffd700;
-            margin-bottom: 40px;
-            text-shadow: 3px 3px 0 #9c27b0;
-        }
-
-        .counter {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .counter-unit {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 30px 25px;
-            border-radius: 15px;
-            min-width: 150px;
-            border: 2px solid #ffd700;
-            transition: all 0.3s ease;
-        }
-
-        .counter-unit:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .counter-unit span {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #ffd700;
-            display: block;
-            text-shadow: 3px 3px 0 #9c27b0;
-        }
-
-        .counter-unit p {
-            margin-top: 15px;
-            font-size: 1.4rem;
-            color: #fff;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 50px 20px;
-            margin-top: 60px;
-            border-top: 2px solid #ffd700;
-            background: rgba(156, 39, 176, 0.2);
-            border-radius: 25px;
-            backdrop-filter: blur(10px);
-        }
-
-        .heartbeat {
-            color: #ff4081;
-            animation: heartbeat 1.5s infinite;
-            margin: 0 10px;
+        .heart-icon {
+            color: var(--rose-500);
+            animation: heartbeat 1.5s ease-in-out infinite;
         }
 
         @keyframes heartbeat {
@@ -422,233 +165,529 @@
             50% { transform: scale(1.2); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        .hero-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--rose-700);
+            max-width: 600px;
+            animation: fade-in-up 1s ease-out 0.6s backwards;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .title { font-size: 3.5rem; }
-            .photo-grid { gap: 20px; }
-            .photo-item { height: 280px; }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Counter Section với hiệu ứng */
+        .counter {
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, var(--cream) 0%, var(--rose-50) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, var(--rose-400), transparent);
+        }
+
+        .counter h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--rose-600);
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .counter-item {
+            background: linear-gradient(145deg, white, var(--rose-50));
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(244, 63, 94, 0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rose-400), var(--rose-500));
+        }
+
+        .counter-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(244, 63, 94, 0.2);
+        }
+
+        .counter-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--rose-500);
+        }
+
+        .counter-item .value {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--rose-500);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-item .label {
+            color: var(--burgundy);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* Gallery Section - 4 ẢNH 1 HÀNG */
+        .gallery {
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, var(--rose-50) 0%, var(--cream) 100%);
+            text-align: center;
+        }
+
+        .gallery h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--rose-600);
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CHỈNH SỬA QUAN TRỌNG: 4 ảnh 1 hàng */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 cột bằng nhau */
+            gap: 1.5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            aspect-ratio: 3/4; /* Tỉ lệ ảnh đứng (portrait) */
+            background: linear-gradient(135deg, var(--rose-100), var(--rose-200));
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(244, 63, 94, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(190, 18, 60, 0.9), transparent);
+            color: white;
+            padding: 1rem;
+            font-size: 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Love Letter Section với hiệu ứng đánh máy */
+        .love-letter {
+            padding: 5rem 2rem;
+            background: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .love-letter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, var(--rose-400), transparent);
+        }
+
+        .love-letter h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--rose-600);
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .letter-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, var(--rose-50), white);
+            padding: 4rem;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(244, 63, 94, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .letter-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 10rem;
+            color: var(--rose-200);
+            font-family: 'Dancing Script', cursive;
+            opacity: 0.5;
+        }
+
+        .letter-content {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--burgundy);
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            text-align: justify;
+            min-height: 300px;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.4em;
+            background-color: var(--burgundy);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .signature {
+            margin-top: 3rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--rose-500);
+            text-align: right;
+            padding-top: 2rem;
+            border-top: 2px solid var(--rose-200);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--rose-500), var(--rose-600));
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, white, transparent);
+        }
+
+        .footer-hearts {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .footer h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive cho 4 ảnh */
+        @media (max-width: 1200px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 cột trên tablet */
+                max-width: 800px;
+            }
+            
+            .gallery-item {
+                aspect-ratio: 4/3; /* Đổi lại tỉ lệ ngang trên tablet */
+            }
         }
 
         @media (max-width: 768px) {
-            .title { font-size: 2.8rem; }
-            .photo-grid { 
-                grid-template-columns: 1fr;
+            .counter-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr; /* 1 cột trên mobile */
                 max-width: 500px;
             }
-            .photo-item { height: 300px; }
-            .counter { gap: 20px; }
-            .counter-unit {
-                min-width: 120px;
-                padding: 25px 20px;
+            
+            .gallery-item {
+                aspect-ratio: 4/3;
             }
-            .counter-unit span { font-size: 3.2rem; }
-            .message-box { padding: 30px; }
-            #typedText { font-size: 1.8rem; }
-            .decoration { font-size: 2rem; }
+            
+            .letter-card {
+                padding: 2rem;
+            }
+            
+            .letter-content {
+                font-size: 1.2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
         }
 
         @media (max-width: 480px) {
-            .title { font-size: 2.2rem; }
-            .photo-item { height: 250px; }
-            .counter-unit {
-                min-width: 100px;
-                padding: 20px 15px;
+            .counter-grid {
+                grid-template-columns: 1fr;
             }
-            .counter-unit span { font-size: 2.8rem; }
-            .decoration { font-size: 1.5rem; }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .date-range {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.5rem;
+            }
+            
+            .couple-names {
+                font-size: 1.8rem;
+            }
+            
+            .hero-quote {
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+            
+            .gallery-item {
+                aspect-ratio: 3/4;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Hiệu ứng trái tim bay -->
-    <div class="hearts" id="hearts"></div>
-    
-    <!-- Hiệu ứng ánh sáng lấp lánh -->
-    <div class="sparkles" id="sparkles"></div>
-    
-    <!-- Đèn trang trí lãng mạn -->
-    <div class="romantic-lights"></div>
-    
-    <!-- Container chính -->
-    <div class="container">
-        <header class="header">
-            <h1 class="title">💖 Happy One Month Anniversary 💖</h1>
-            <div class="subtitle"></div>
-            <div class="decoration">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-music"></i>
-                <i class="fas fa-kiss-wink-heart"></i>
+    <!-- Floating Hearts -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="date-range">4.12.2025 - 4.1.2026</div>
+        <h1>Happy 1 Month</h1>
+        <div class="couple-names">
+            <span></span>
+            <span class="heart-icon"></span>
+            <span></span>
+        </div>
+        <p class="hero-quote">
+            "Một tháng bên nhau, ngàn kỷ niệm đẹp. Cảm ơn em đã đến bên anh, là ánh sáng trong những ngày bình thường của anh."
+        </p>
+        <div class="scroll-indicator">⬇️</div>
+    </section>
+
+    <!-- Counter Section -->
+    <section class="counter">
+        <h2>✨ Our Love Journey ✨</h2>
+        <div class="counter-grid">
+            <div class="counter-item">
+                <div class="icon">📅</div>
+                <div class="value" id="days">30</div>
+                <div class="label">Days</div>
             </div>
-        </header>
-
-        <section class="gallery">
-            <h2><i class="fas fa-images"></i> Our Memorable Moments </h2>
-            
-            <div class="loading" id="loading">
-                <i class="fas fa-spinner fa-spin"></i> Đang tải những khoảnh khắc đẹp...
+            <div class="counter-item">
+                <div class="icon">⏰</div>
+                <div class="value" id="hours">720</div>
+                <div class="label">Hours</div>
             </div>
-            
-            <div class="photo-grid" id="photoGrid"></div>
-        </section>
-
-        <section class="message">
-            <h2><i class="fas fa-envelope-open-text"></i> For You, My Love...</h2>
-            <div class="message-box">
-                <div class="message-content">
-                    <p id="typedText"></p>
-                    <div class="signature">
-                        <p class="signature-name">Anh Nguyên</p>
-                        <p></p>
-                    </div>
-                </div>
-                <div class="message-decoration">
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-heart"></i>
-                </div>
+            <div class="counter-item">
+                <div class="icon">⏱️</div>
+                <div class="value" id="minutes">43200</div>
+                <div class="label">Minutes</div>
             </div>
-        </section>
-
-        <section class="memory-counter">
-            <h2><i class="fas fa-history"></i> Our Love Journey</h2>
-            <div class="counter">
-                <div class="counter-unit">
-                    <span id="days">20</span>
-                    <p>Ngày</p>
-                </div>
-                <div class="counter-unit">
-                    <span id="hours">480</span>
-                    <p>Giờ</p>
-                </div>
-                <div class="counter-unit">
-                    <span id="minutes">28800</span>
-                    <p>Phút</p>
-                </div>
-                <div class="counter-unit">
-                    <span id="seconds">1728000</span>
-                    <p>Giây</p>
-                </div>
+            <div class="counter-item">
+                <div class="icon">💓</div>
+                <div class="value" id="seconds">2592000</div>
+                <div class="label">Seconds</div>
             </div>
-            <p style="margin-top: 30px; font-size: 1.2rem; color: #ffd700;">
-                    Since: December 4th, 2025 - 11:00 PM            </p>
-        </section>
+        </div>
+        <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;">
+            Started: December 4th, 2025 at 23:00
+        </p>
+    </section>
 
-        <footer class="footer">
-            <p>Made with <i class="fas fa-heart heartbeat"></i> by "Anh iu"</p>
-            <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem;"></p>
-        </footer>
-    </div>
+    <!-- Gallery Section với 4 ẢNH 1 HÀNG -->
+    <section class="gallery">
+        <h2>📸 Our Beautiful Moments 📸</h2>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
 
-    <audio id="backgroundMusic" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-i-miss-you-1490.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Love Letter Section -->
+    <section class="love-letter">
+        <h2>💌 A Message From My Heart 💌</h2>
+        <div class="letter-card">
+            <div class="letter-content" id="typedText"></div>
+            <div class="signature">
+                With all my love,<br>
+                Anh Nguyên
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-hearts">💕 ❤️ 💕</div>
+        <h3>Anh ❤️ Em</h3>
+        <p>First month of forever...</p>
+    </footer>
 
     <script>
-        // Tạo hiệu ứng trái tim bay
-        function createHearts() {
-            const heartsContainer = document.getElementById('hearts');
-            const heartCount = 50;
-            const heartIcons = ['💖', '❤️', '💕', '💗', '💓', '💞'];
-            
-            for (let i = 0; i < heartCount; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-                
-                const size = Math.random() * 30 + 20;
-                const left = Math.random() * 100;
-                const delay = Math.random() * 10;
-                const duration = Math.random() * 15 + 10;
-                
-                heart.style.fontSize = `${size}px`;
-                heart.style.left = `${left}%`;
-                heart.style.animationDuration = `${duration}s`;
-                heart.style.animationDelay = `${delay}s`;
-                
-                heartsContainer.appendChild(heart);
-            }
-        }
-
-        // Tạo hiệu ứng ánh sáng lấp lánh
-        function createSparkles() {
-            const sparklesContainer = document.getElementById('sparkles');
-            const sparkleCount = 80;
-            
-            for (let i = 0; i < sparkleCount; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                
-                const size = Math.random() * 4 + 1;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const delay = Math.random() * 2;
-                const duration = Math.random() * 3 + 1;
-                
-                sparkle.style.width = `${size}px`;
-                sparkle.style.height = `${size}px`;
-                sparkle.style.left = `${posX}%`;
-                sparkle.style.top = `${posY}%`;
-                sparkle.style.animationDelay = `${delay}s`;
-                sparkle.style.animationDuration = `${duration}s`;
-                
-                sparklesContainer.appendChild(sparkle);
-            }
-        }
-
-        // Danh sách ảnh
+        // Danh sách ảnh của bạn
         const myImages = [
             {
                 url: "https://i.postimg.cc/K88X5c78/1.jpg",
                 date: "4.11.2025",
-                caption: "Ngày đầu tiên chúng ta chính thức yêu nhau"
+                caption: ""
             },
             {
                 url: "https://i.postimg.cc/wjjKkx5X/2.jpg",
                 date: "22.11.2025",
-                caption: "Khoảnh khắc đáng nhớ"
+                caption: ""
             },
             {
                 url: "https://i.postimg.cc/kggryMN8/3.jpg",   
                 date: "4.12.2025",
-                caption: "Cùng nhau tạo nên kỷ niệm"
+                caption: ""
             },
             {
                 url: "https://i.postimg.cc/mggxSZ33/4.jpg",
                 date: "5.12.2025",
-                caption: "Mỉm cười vì có nhau"
+                caption: ""
             }
         ];
 
-        // Tải ảnh
-        function loadImages() {
-            const photoGrid = document.getElementById('photoGrid');
-            const loading = document.getElementById('loading');
+        // Lời nhắn
+        const message = `Em yêu ơi,<br><br>
+Thật khó tin khi đã một tháng trôi qua kể từ ngày tụi mình chính thức bắt đầu hành trình yêu nhau. Tuy không dài nhưng đủ để anh biết anh đã gặp đúng người.<br><br>
+Cảm ơn em đã cho anh cơ hội được bên em và chăm sóc em ^^ Mỗi khoảnh khắc bên em đều làm anh cảm thấy cuộc sống này thật ý nghĩa. <br><br>
+30 ngày đầu tiên chỉ là khởi đầu, anh mong mình sẽ có thêm nhiều tháng, nhiều năm như thế này nữa. Cùng nhau trải qua mọi điều trong cuộc sống, vui có, buồn có, nhưng quan trọng là có nhau.<br><br>
+Yêu em nhiều lắm... ❤️`;
+
+        // Tạo hiệu ứng trái tim bay
+        function createHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘'];
             
-            photoGrid.innerHTML = '';
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.opacity = Math.random() * 0.4 + 0.3;
+                container.appendChild(heart);
+            }
+        }
+
+        // Tải ảnh vào gallery - 4 ảnh 1 hàng
+        function loadGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
             
             myImages.forEach((imageData) => {
-                const photoItem = document.createElement('div');
-                photoItem.className = 'photo-item';
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
                 
-                photoItem.innerHTML = `
+                galleryItem.innerHTML = `
                     <img src="${imageData.url}" alt="${imageData.caption}"
                          onerror="this.src='https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
-                    <div class="photo-caption"> ${imageData.date}</div>
+                    <div class="gallery-caption">${imageData.caption}<br>${imageData.date}</div>
                 `;
                 
-                photoItem.onclick = function() {
+                galleryItem.onclick = function() {
                     showImageModal(imageData.url, imageData.caption, imageData.date);
                 };
                 
-                photoGrid.appendChild(photoItem);
+                galleryGrid.appendChild(galleryItem);
             });
-            
-            loading.style.display = 'none';
         }
 
         // Hiển thị ảnh lớn
@@ -664,17 +703,17 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                z-index: 1000;
+                z-index: 2000;
                 cursor: pointer;
             `;
             
             modal.innerHTML = `
                 <div style="max-width: 90%; max-height: 90%; position: relative;">
                     <img src="${imgUrl}" alt="${caption}" 
-                         style="max-width: 100%; max-height: 80vh; border: 5px solid #ff4081; border-radius: 10px;"
+                         style="max-width: 100%; max-height: 80vh; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.5);"
                          onerror="this.src='https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                    <div style="position: absolute; top: 20px; right: 20px; color: white; font-size: 2rem; cursor: pointer; background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">×</div>
-                    <div style="position: absolute; bottom: 20px; left: 0; right: 0; color: white; font-size: 1.5rem; background: rgba(156, 39, 176, 0.8); padding: 15px; border-radius: 10px; text-align: center;">${caption} - ${date}</div>
+                    <div style="position: absolute; top: 20px; right: 20px; color: white; font-size: 2.5rem; cursor: pointer; background: rgba(190, 18, 60, 0.7); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">×</div>
+                    <div style="position: absolute; bottom: 20px; left: 0; right: 0; color: white; font-size: 1.5rem; background: rgba(190, 18, 60, 0.8); padding: 15px; border-radius: 10px; text-align: center;">${caption} - ${date}</div>
                 </div>
             `;
             
@@ -685,83 +724,83 @@
             };
         }
 
-        // Code chính
-        document.addEventListener('DOMContentLoaded', function() {
-            createHearts();
-            createSparkles();
-            loadImages();
-            
-            const backgroundMusic = document.getElementById('backgroundMusic');
-            
-            setTimeout(function() {
-                try {
-                    backgroundMusic.volume = 0.2;
-                    backgroundMusic.play();
-                } catch (e) {
-                    console.log("Click để nghe nhạc");
-                }
-            }, 1000);
-            
-            document.body.onclick = function() {
-                if (backgroundMusic.paused) {
-                    backgroundMusic.volume = 0.2;
-                    backgroundMusic.play();
-                }
-            };
-            
-            const message = `Em yêu ơi,<br><br>
-Thật khó tin khi đã một tháng trôi qua kể từ ngày tụi mình chính thức bắt đầu hành trình yêu nhau. Tuy không dài nhưng đủ để anh biết anh đã gặp đúng người.<br><br>
-Cảm ơn em đã cho anh cơ hội bên em và chăm sóc em ^^
-Mỗi khoảnh khắc bên em đều làm anh cảm thấy cuộc sống này thật ý nghĩa. <br><br>
-30 ngày đầu tiên chỉ là khởi đầu. Anh mong mình sẽ có thêm nhiều tháng, nhiều năm như thế này nữa nha. Cùng nhau trải qua mọi điều trong cuộc sống, vui có, buồn có, nhưng quan trọng là có nhau.<br><br>
-Yêu em nhiều lắm... ❤️`;
-            
+        // Hiệu ứng gõ chữ
+        function typeWriter() {
             const typedTextElement = document.getElementById('typedText');
             let charIndex = 0;
             
-            function typeWriter() {
+            function typing() {
                 if (charIndex < message.length) {
-                    typedTextElement.innerHTML = message.substring(0, charIndex + 1);
+                    typedTextElement.innerHTML = message.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
                     charIndex++;
-                    setTimeout(typeWriter,50);
+                    
+                    // Tốc độ gõ chậm: 50ms mỗi ký tự
+                    let delay = 50;
+                    
+                    // Chờ lâu hơn sau dấu câu
+                    const currentChar = message.charAt(charIndex - 1);
+                    if (currentChar === '.' || currentChar === '!' || currentChar === '?' || currentChar === '^') {
+                        delay = 300;
+                    } else if (currentChar === '<' && message.charAt(charIndex) === 'b') {
+                        delay = 200;
+                    }
+                    
+                    setTimeout(typing, delay);
+                } else {
+                    // Khi gõ xong, xóa con trỏ nhấp nháy
+                    typedTextElement.innerHTML = message;
                 }
             }
             
-            setTimeout(typeWriter, 1500);
+            // Bắt đầu gõ chữ sau 1.5 giây
+            setTimeout(typing, 1500);
+        }
+
+        // Tính thời gian yêu nhau từ 23:00 ngày 4/12/2025
+        function calculateLoveTime() {
+            const loveStartDate = new Date('2025-12-04T23:00:00');
+            const now = new Date();
+            const diff = now - loveStartDate;
             
-            // Tính thời gian yêu nhau từ ngày 4/12/2025
-            function calculateLoveTime() {
-                // NGÀY BẮT ĐẦU: 4/12/2025
-                const loveStartDate = new Date('2025-12-04T23:00:00');
-                
-                const now = new Date();
-                const diff = now - loveStartDate;
-                
-                // Tính số ngày
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                
-                // Tính số giờ còn lại sau khi trừ ngày
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                
-                // Tính số phút còn lại sau khi trừ giờ
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                
-                // Tính số giây còn lại sau khi trừ phút
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                // Hiển thị kết quả
-                document.getElementById('days').textContent = days;
-                document.getElementById('hours').textContent = hours;
-                document.getElementById('minutes').textContent = minutes;
-                document.getElementById('seconds').textContent = seconds;
+            if (diff < 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
             }
             
-            // Update counter mỗi giây
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        // Khởi tạo khi trang tải xong
+        document.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+            loadGallery();
+            typeWriter();
+            calculateLoveTime();
+            
+            // Cập nhật bộ đếm mỗi giây
             setInterval(calculateLoveTime, 1000);
-            calculateLoveTime(); // Chạy ngay lần đầu
+            
+            // Hiệu ứng scroll
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    scrollIndicator.style.opacity = '0';
+                } else {
+                    scrollIndicator.style.opacity = '1';
+                }
+            });
         });
     </script>
 </body>
 </html>
-
-
