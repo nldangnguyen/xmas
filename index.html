@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 1 Month Anniversary ❤️ | Anh Nguyên</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -67,6 +68,110 @@
             100% {
                 transform: translateY(-100px) rotate(360deg);
                 opacity: 0;
+            }
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--rose-300);
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            color: var(--rose-600);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background-color: var(--rose-100);
+            transform: scale(1.1);
+        }
+
+        .music-btn:active {
+            transform: scale(0.95);
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 5px;
+            -webkit-appearance: none;
+            background: var(--rose-200);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--rose-600);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .now-playing {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            color: var(--rose-700);
+            max-width: 250px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--rose-200);
+            display: none;
+        }
+
+        .now-playing.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
 
@@ -517,6 +622,25 @@
             .hero h1 {
                 font-size: 2.8rem;
             }
+            
+            .music-player {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .music-controls {
+                padding: 8px 12px;
+            }
+            
+            .music-btn {
+                font-size: 1.2rem;
+                width: 35px;
+                height: 35px;
+            }
+            
+            .volume-slider {
+                width: 60px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -551,6 +675,39 @@
 <body>
     <!-- Floating Hearts -->
     <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="now-playing" id="nowPlaying">
+            <i class="fas fa-music" style="margin-right: 5px;"></i>
+            <span id="songTitle">Có Được Không Em</span>
+        </div>
+        <div class="music-controls">
+            <button class="music-btn" id="prevBtn" title="Bài trước">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="music-btn" id="playBtn" title="Phát nhạc">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="music-btn" id="nextBtn" title="Bài tiếp">
+                <i class="fas fa-step-forward"></i>
+            </button>
+            <div class="volume-control">
+                <button class="music-btn" id="muteBtn" title="Tắt tiếng">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop>
+        <!-- Đổi link này thành đường dẫn tới file nhạc của bạn -->
+        <source src="coduockhongem.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -652,9 +809,10 @@
 
         // Lời nhắn (ĐÃ SỬA LỖI - CHỈ 1 DÒNG const message)
         const message = `Em yêu ơi,<br><br>
-Thật khó tin khi đã một tháng trôi qua kể từ ngày tụi mình chính thức bắt đầu hành trình yêu nhau. Một tháng có thể chưa đủ dài để anh hiểu hết về em, nhưng đủ để anh biết mình muốn dành nhiều tháng hơn nữa bên cạnh em.<br><br>
-Mong rằng mỗi tháng trôi qua, tình yêu của mình không chỉ lớn lên, mà còn ấm áp và bình yên hơn nữa.<br><br>
-Thương em... ❤️`;
+Thật khó tin khi đã một tháng trôi qua kể từ ngày chúng ta chính thức bắt đầu hành trình yêu nhau. Một tháng có thể chưa đủ dài để anh hiểu hết về em, nhưng đủ để anh biết mình muốn dành nhiều tháng hơn nữa bên cạnh em.<br><br>
+Cảm ơn em đã cho anh cơ hội yêu em và chăm sóc em ^^ Mỗi khoảnh khắc bên em đều làm anh hạnh phúc.<br><br>
+Mong rằng mỗi tháng trôi qua, tình yêu của chúng ta không chỉ lớn lên, mà còn ấm áp và bình yên hơn nữa.<br><br>
+Yêu em nhiều lắm... ❤️`;
 
         // Tạo hiệu ứng trái tim bay
         function createHearts() {
@@ -787,6 +945,137 @@ Thương em... ❤️`;
             document.getElementById('seconds').textContent = seconds;
         }
 
+        // ========== PHẦN NHẠC ==========
+        const audio = document.getElementById('backgroundMusic');
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const nowPlaying = document.getElementById('nowPlaying');
+        const songTitle = document.getElementById('songTitle');
+
+        // Danh sách bài hát (bạn có thể thêm nhiều bài hơn)
+        const playlist = [
+            {
+                title: "Có Được Không Em",
+                src: "coduockhongem.mp3"
+            },
+            {
+                title: "Nhạc tình yêu",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            }
+        ];
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isMuted = false;
+        let lastVolume = 50;
+
+        // Khởi tạo âm lượng
+        audio.volume = volumeSlider.value / 100;
+
+        // Hàm phát nhạc
+        function playMusic() {
+            audio.play();
+            isPlaying = true;
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            playBtn.title = "Tạm dừng";
+            nowPlaying.classList.add('show');
+        }
+
+        // Hàm tạm dừng nhạc
+        function pauseMusic() {
+            audio.pause();
+            isPlaying = false;
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playBtn.title = "Phát nhạc";
+        }
+
+        // Hàm tải và phát bài hát
+        function loadSong(index) {
+            if (index < 0) index = playlist.length - 1;
+            if (index >= playlist.length) index = 0;
+            
+            currentSongIndex = index;
+            const song = playlist[currentSongIndex];
+            
+            audio.src = song.src;
+            songTitle.textContent = song.title;
+            
+            if (isPlaying) {
+                audio.play();
+            }
+        }
+
+        // Sự kiện nút phát/tạm dừng
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseMusic();
+            } else {
+                playMusic();
+            }
+        });
+
+        // Sự kiện nút bài trước
+        prevBtn.addEventListener('click', () => {
+            loadSong(currentSongIndex - 1);
+        });
+
+        // Sự kiện nút bài tiếp
+        nextBtn.addEventListener('click', () => {
+            loadSong(currentSongIndex + 1);
+        });
+
+        // Sự kiện điều chỉnh âm lượng
+        volumeSlider.addEventListener('input', () => {
+            const volume = volumeSlider.value / 100;
+            audio.volume = volume;
+            lastVolume = volumeSlider.value;
+            
+            // Cập nhật icon âm lượng
+            if (volume === 0) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else if (volume < 0.5) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        });
+
+        // Sự kiện nút tắt tiếng
+        muteBtn.addEventListener('click', () => {
+            if (isMuted) {
+                // Bật tiếng
+                audio.volume = lastVolume / 100;
+                volumeSlider.value = lastVolume;
+                muteBtn.innerHTML = lastVolume === 0 ? 
+                    '<i class="fas fa-volume-mute"></i>' : 
+                    (lastVolume < 50 ? '<i class="fas fa-volume-down"></i>' : '<i class="fas fa-volume-up"></i>');
+                isMuted = false;
+            } else {
+                // Tắt tiếng
+                lastVolume = volumeSlider.value;
+                audio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                isMuted = true;
+            }
+        });
+
+        // Tự động phát nhạc khi trang tải xong (sau 2 giây)
+        setTimeout(() => {
+            playMusic();
+        }, 2000);
+
+        // Hiển thị thông báo khi bài hát kết thúc
+        audio.addEventListener('ended', () => {
+            // Tự động chuyển bài tiếp theo
+            loadSong(currentSongIndex + 1);
+        });
+
+        // ========== KẾT THÚC PHẦN NHẠC ==========
+
         // Khởi tạo khi trang tải xong
         document.addEventListener('DOMContentLoaded', function() {
             createHearts();
@@ -810,4 +1099,3 @@ Thương em... ❤️`;
     </script>
 </body>
 </html>
-
