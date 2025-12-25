@@ -438,6 +438,45 @@
             transform: scale(1.1);
         }
 
+        /* Audio autoplay notice */
+        .autoplay-notice {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 2001;
+            background: linear-gradient(135deg, var(--rose-500), var(--rose-600));
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            display: none;
+            animation: slideIn 0.3s ease;
+            max-width: 300px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .autoplay-notice.show {
+            display: block;
+        }
+
+        .autoplay-notice button {
+            background: white;
+            color: var(--rose-600);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .autoplay-notice button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
         /* ========== COUNTER BLUR STYLES ========== */
         .counter-item .value {
             font-family: 'Dancing Script', cursive;
@@ -895,6 +934,7 @@
             .music-player { top: 10px; right: 10px; }
             .music-controls { padding: 8px 12px; }
             .playlist-panel { width: 280px; right: 10px; }
+            .autoplay-notice { top: 70px; right: 10px; max-width: 250px; }
         }
 
         @media (max-width: 480px) {
@@ -932,6 +972,12 @@
     <div class="main-content" id="mainContent">
         <!-- Floating Hearts -->
         <div class="floating-hearts" id="floatingHearts"></div>
+
+        <!-- Autoplay Notice -->
+        <div class="autoplay-notice" id="autoplayNotice">
+            <p>🎵 Nhạc tạm thời bị tắt. Click để phát lại!</p>
+            <button id="playMusicManually">Phát nhạc ngay</button>
+        </div>
 
         <!-- Enhanced Music Player -->
         <div class="music-player">
@@ -975,7 +1021,7 @@
         </div>
 
         <!-- Audio Element -->
-        <audio id="backgroundMusic">
+        <audio id="backgroundMusic" loop>
             <source src="onlylove.mp3" type="audio/mpeg">
         </audio>
 
@@ -1066,13 +1112,15 @@
         // Danh sách nhạc (thêm/bớt bài tại đây)
         const playlist = [
             { title: "Only Love", src: "onlylove.mp3" },
-            { title: "My Love", src: "My Love.mp3" },
-            { title: "Nothing's Gonna Change My Love For You", src: "Nothing'S Gonna Change My Love For You.mp3" },
-            { title: "I Lay My Love On You", src: "I Lay My Love on You.mp3" },
+            { title: "My Love", src: "onlylove.mp3" },
+            { title: "Nothing's Gonna Change My Love For You", src: "Nothing's Gonna Change My Love For You.mp3" },
+            { title: "I Lay My Love On You", src: "I Lay My Love On You.mp3" },
             { title: "Từng Ngày Yêu Em", src: "tungngayyeuem.mp3" },
             { title: "Yêu Em Hơn Mỗi Ngày", src: "yeuemhonmoingay.mp3" },
-            { title: "Until You", src: "Until You.mp3" },
-           
+            { title: "Perfect", src: "Perfect.mp3" },
+            { title: "Thinking Out Loud", src: "Thinking Out Loud.mp3" },
+            { title: "All Of Me", src: "All Of Me.mp3" },
+            { title: "A Thousand Years", src: "A Thousand Years.mp3" }
         ];
 
         // Danh sách ảnh
@@ -1216,19 +1264,6 @@ Anh thương em...`;
             });
         }
 
-        // ========== MAIN CONTENT INIT ==========
-        function initMainContent() {
-            setupBlurredDates(); // Khởi tạo hiệu ứng blur cho ngày tháng
-            setupCounterReveal(); // Khởi tạo hiệu ứng reveal cho counter
-            createHearts();
-            loadGallery();
-            typeWriter();
-            calculateLoveTime();
-            setInterval(calculateLoveTime, 1000);
-            initMusicPlayer();
-            renderPlaylist();
-        }
-
         // ========== ENHANCED MUSIC PLAYER ==========
         const audio = document.getElementById('backgroundMusic');
         const playBtn = document.getElementById('playBtn');
@@ -1242,33 +1277,76 @@ Anh thương em...`;
         const closePlaylistBtn = document.getElementById('closePlaylist');
         const playlistPanel = document.getElementById('playlistPanel');
         const playlistItems = document.getElementById('playlistItems');
+        const autoplayNotice = document.getElementById('autoplayNotice');
+        const playMusicManuallyBtn = document.getElementById('playMusicManually');
 
         let currentSongIndex = 0;
         let isPlaying = false;
         let isMuted = false;
         let lastVolume = 50;
+        let userInteracted = false;
 
         function initMusicPlayer() {
             audio.volume = volumeSlider.value / 100;
             loadSong(0);
             
-            setTimeout(() => {
+            // Thử phát nhạc tự động
+            attemptAutoplay();
+            
+            // Lưu trạng thái phát nhạc vào sessionStorage
+            if (sessionStorage.getItem('music_was_playing') === 'true') {
                 playMusic();
-            }, 2000);
+            }
+        }
+
+        function attemptAutoplay() {
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Autoplay thành công
+                    isPlaying = true;
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    nowPlaying.classList.add('show');
+                    autoplayNotice.classList.remove('show');
+                    sessionStorage.setItem('music_was_playing', 'true');
+                }).catch(() => {
+                    // Autoplay bị block
+                    console.log("Autoplay bị block bởi trình duyệt");
+                    isPlaying = false;
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    autoplayNotice.classList.add('show');
+                    
+                    // Hiển thị thông báo trong 10 giây
+                    setTimeout(() => {
+                        if (!userInteracted) {
+                            autoplayNotice.classList.add('show');
+                        }
+                    }, 1000);
+                });
+            }
         }
 
         function playMusic() {
-            audio.play().catch(() => console.log("Autoplay blocked"));
-            isPlaying = true;
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            nowPlaying.classList.add('show');
-            updateActivePlaylistItem();
+            userInteracted = true;
+            audio.play().then(() => {
+                isPlaying = true;
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                nowPlaying.classList.add('show');
+                autoplayNotice.classList.remove('show');
+                sessionStorage.setItem('music_was_playing', 'true');
+                updateActivePlaylistItem();
+            }).catch(error => {
+                console.log("Lỗi phát nhạc:", error);
+                autoplayNotice.classList.add('show');
+            });
         }
 
         function pauseMusic() {
             audio.pause();
             isPlaying = false;
             playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            sessionStorage.setItem('music_was_playing', 'false');
         }
 
         function loadSong(index) {
@@ -1280,8 +1358,13 @@ Anh thương em...`;
             songTitle.textContent = playlist[currentSongIndex].title;
             
             if (isPlaying) {
-                audio.play();
-                updateActivePlaylistItem();
+                audio.play().then(() => {
+                    updateActivePlaylistItem();
+                }).catch(() => {
+                    // Nếu không thể phát, chờ user tương tác
+                    isPlaying = false;
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                });
             }
         }
 
@@ -1359,6 +1442,9 @@ Anh thương em...`;
             }
         });
 
+        // Manual play button
+        playMusicManuallyBtn.addEventListener('click', playMusic);
+
         // Music controls
         playBtn.addEventListener('click', () => {
             if (isPlaying) {
@@ -1416,6 +1502,27 @@ Anh thương em...`;
         // Update playlist when song changes
         audio.addEventListener('play', updateActivePlaylistItem);
         audio.addEventListener('pause', updateActivePlaylistItem);
+
+        // Lắng nghe sự kiện user interaction để bật autoplay
+        document.addEventListener('click', () => {
+            userInteracted = true;
+            if (!isPlaying && audio.paused) {
+                playMusic();
+            }
+        });
+
+        // ========== MAIN CONTENT INIT ==========
+        function initMainContent() {
+            setupBlurredDates(); // Khởi tạo hiệu ứng blur cho ngày tháng
+            setupCounterReveal(); // Khởi tạo hiệu ứng reveal cho counter
+            createHearts();
+            loadGallery();
+            typeWriter();
+            calculateLoveTime();
+            setInterval(calculateLoveTime, 1000);
+            initMusicPlayer();
+            renderPlaylist();
+        }
 
         // ========== FLOATING HEARTS ==========
         function createHearts() {
@@ -1504,4 +1611,3 @@ Anh thương em...`;
     </script>
 </body>
 </html>
-
