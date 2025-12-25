@@ -199,7 +199,7 @@
 
         /* ========== BLURRED DATE STYLES ========== */
         .blurred-date {
-            filter: blur(100px);
+            filter: blur(5px); /* Giảm từ 100px xuống 5px */
             position: relative;
             transition: filter 0.3s ease;
             cursor: pointer;
@@ -207,11 +207,53 @@
         }
 
         .blurred-date:hover {
-            filter: blur(50px);
+            filter: blur(2px);
         }
 
         .blurred-date.revealed {
             filter: blur(0);
+        }
+
+        /* ========== BLURRED LOVE LETTER (NHẸ) ========== */
+        .blurred-letter {
+            filter: blur(8px); /* Chỉ làm mờ nhẹ 8px */
+            position: relative;
+            transition: filter 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .blurred-letter:hover {
+            filter: blur(4px);
+        }
+
+        .blurred-letter.revealed {
+            filter: blur(0); /* Xóa blur khi click */
+        }
+
+        /* Lớp phủ nhẹ để gợi ý */
+        .blurred-letter::after {
+            content: '💌 Click để đọc rõ hơn';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--rose-600);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            text-align: center;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 2;
+            white-space: nowrap;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .blurred-letter.revealed::after {
+            display: none;
         }
 
         /* ========== ENHANCED MUSIC PLAYER ========== */
@@ -442,7 +484,7 @@
             transform: scale(1.1);
         }
 
-        /* Audio autoplay notice - CHỈNH SỬA */
+        /* Audio autoplay notice */
         .autoplay-notice {
             position: fixed;
             top: 80px;
@@ -457,7 +499,7 @@
             max-width: 300px;
             text-align: center;
             font-size: 0.9rem;
-            display: none; /* Mặc định ẩn */
+            display: none;
         }
 
         .autoplay-notice.show {
@@ -985,7 +1027,6 @@
 
         <!-- Enhanced Music Player -->
         <div class="music-player">
-            <!-- CHỈNH SỬA: Hiển thị now-playing LUÔN LUÔN -->
             <div class="now-playing show" id="nowPlaying">
                 <i class="fas fa-music" style="margin-right: 5px;"></i>
                 <span id="songTitle">Only Love</span>
@@ -1032,7 +1073,6 @@
 
         <!-- Hero Section -->
         <section class="hero">
-            <!-- Thêm blur cho date-range -->
             <div class="date-range blurred-date">4.12.2025 - 4.1.2026</div>
             <h1>Happy Anniversary</h1>
             <div class="couple-names">
@@ -1078,9 +1118,8 @@
                     <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu giây</div>
                 </div>
             </div>
-            <!-- Thêm blur cho thông tin ngày bắt đầu -->
             <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;" class="blurred-date">
-                Started: x xth, 2025 at 23:00
+                Started: December 4th, 2025 at 23:00
             </p>
         </section>
 
@@ -1090,10 +1129,10 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </section>
 
-        <!-- Love Letter Section -->
+        <!-- Love Letter Section với blur nhẹ -->
         <section class="love-letter">
             <h2>💌 My Dearest Thoughts 💌</h2>
-            <div class="letter-card">
+            <div class="letter-card blurred-letter" id="loveLetter">
                 <div class="letter-content" id="typedText"></div>
                 <div class="signature">
                     With all my love,<br>
@@ -1114,7 +1153,7 @@
         // ========== CẤU HÌNH ==========
         const correctPassword = "041225"; // ĐỔI MẬT KHẨU TẠI ĐÂY
 
-        // Danh sách nhạc (thêm/bớt bài tại đây)
+        // Danh sách nhạc
         const playlist = [
             { title: "Only Love", src: "onlylove.mp3" },
             { title: "My Love", src: "My Love.mp3" },
@@ -1123,7 +1162,6 @@
             { title: "Từng Ngày Yêu Em", src: "tungngayyeuem.mp3" },
             { title: "Yêu Em Hơn Mỗi Ngày", src: "yeuemhonmoingay.mp3" },
             { title: "Until You", src: "Until You.mp3" },
-           
         ];
 
         // Danh sách ảnh
@@ -1148,7 +1186,6 @@ Anh thương em...`;
         const errorMessage = document.getElementById('errorMessage');
         const lockIcon = document.getElementById('lockIcon');
 
-        // THÊM: Lưu current song index vào sessionStorage
         let currentSongIndex = parseInt(sessionStorage.getItem('current_song_index')) || 0;
         let currentSongTitle = sessionStorage.getItem('current_song_title') || playlist[0].title;
 
@@ -1181,28 +1218,35 @@ Anh thương em...`;
             }
         });
 
-        // ========== BLURRED DATE FUNCTIONALITY ==========
-        function setupBlurredDates() {
-            const blurredElements = document.querySelectorAll('.blurred-date');
-            blurredElements.forEach(el => {
-                // Click để hiện/ẩn
+        // ========== BLURRED DATES & LOVE LETTER FUNCTIONALITY ==========
+        function setupBlurredElements() {
+            const blurredDates = document.querySelectorAll('.blurred-date');
+            const blurredLetter = document.querySelector('.blurred-letter');
+            
+            // Xử lý cho dates
+            blurredDates.forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
                     this.classList.toggle('revealed');
                 });
-                
-                // Double click để hiện thông báo
-                el.addEventListener('dblclick', function(e) {
-                    e.stopPropagation();
-                    alert('💕 Ngày tháng đặc biệt của chúng mình, chỉ mình em biết thôi nhé!');
-                });
             });
             
-            // Click ra ngoài để ẩn lại
+            // Xử lý cho love letter (mờ nhẹ)
+            if (blurredLetter) {
+                blurredLetter.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('revealed');
+                });
+            }
+            
+            // Click ra ngoài để ẩn tất cả
             document.addEventListener('click', function() {
-                blurredElements.forEach(el => {
+                blurredDates.forEach(el => {
                     el.classList.remove('revealed');
                 });
+                if (blurredLetter) {
+                    blurredLetter.classList.remove('revealed');
+                }
             });
         }
 
@@ -1218,22 +1262,18 @@ Anh thương em...`;
                     const id = this.getAttribute('data-id');
                     const valueElement = this.querySelector('.value');
                     
-                    // Nếu đã reveal rồi thì không làm gì
                     if (this.classList.contains('revealed')) {
                         return;
                     }
                     
-                    // Thêm class revealed
                     this.classList.add('revealed');
                     revealedItems.add(id);
                     
-                    // Hiệu ứng mờ dần
                     valueElement.style.transition = 'filter 0.8s ease';
                     setTimeout(() => {
                         valueElement.style.filter = 'blur(0)';
                     }, 10);
                     
-                    // Hiển thị thông báo cute
                     const messages = {
                         'days': '🎉 Wow! Đã yêu nhau được nhiều ngày thế này rồi sao?',
                         'hours': '⏰ Mỗi giờ bên em đều thật đáng giá!',
@@ -1247,7 +1287,6 @@ Anh thương em...`;
                         }, 300);
                     }
                     
-                    // Kiểm tra nếu đã reveal hết 4 cột
                     if (revealedItems.size === 4) {
                         setTimeout(() => {
                             alert('💕 Em đã khám phá hết tất cả! Chúng mình đã yêu nhau được ' + 
@@ -1257,16 +1296,6 @@ Anh thương em...`;
                                   document.getElementById('seconds').textContent + ' giây rồi đó!');
                         }, 500);
                     }
-                });
-                
-                // Double click để reset
-                item.addEventListener('dblclick', function(e) {
-                    e.stopPropagation();
-                    const id = this.getAttribute('data-id');
-                    this.classList.remove('revealed');
-                    revealedItems.delete(id);
-                    const valueElement = this.querySelector('.value');
-                    valueElement.style.filter = 'blur(10px)';
                 });
             });
         }
@@ -1295,17 +1324,13 @@ Anh thương em...`;
         function initMusicPlayer() {
             audio.volume = volumeSlider.value / 100;
             
-            // CHỈNH SỬA: Luôn hiển thị tiêu đề bài hát hiện tại
             songTitle.textContent = currentSongTitle;
-            nowPlaying.classList.add('show'); // Đảm bảo hiển thị
+            nowPlaying.classList.add('show');
             
-            // Load bài hát từ sessionStorage
-            loadSong(currentSongIndex, false); // false = không tự động phát
+            loadSong(currentSongIndex, false);
             
-            // Thử phát nhạc tự động
             attemptAutoplay();
             
-            // Lưu trạng thái phát nhạc vào sessionStorage
             if (sessionStorage.getItem('music_was_playing') === 'true') {
                 setTimeout(() => {
                     playMusic();
@@ -1318,18 +1343,14 @@ Anh thương em...`;
             
             if (playPromise !== undefined) {
                 playPromise.then(() => {
-                    // Autoplay thành công
                     isPlaying = true;
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     nowPlaying.classList.add('show');
                     autoplayNotice.classList.remove('show');
                     sessionStorage.setItem('music_was_playing', 'true');
                 }).catch(() => {
-                    // Autoplay bị block
-                    console.log("Autoplay bị block bởi trình duyệt");
                     isPlaying = false;
                     playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                    // KHÔNG hiện thông báo autoplay ngay lập tức
                 });
             }
         }
@@ -1344,8 +1365,6 @@ Anh thương em...`;
                 sessionStorage.setItem('music_was_playing', 'true');
                 updateActivePlaylistItem();
             }).catch(error => {
-                console.log("Lỗi phát nhạc:", error);
-                // Hiển thị thông báo khi người dùng cố gắng play nhưng không được
                 autoplayNotice.classList.add('show');
             });
         }
@@ -1365,7 +1384,6 @@ Anh thương em...`;
             audio.src = playlist[currentSongIndex].src;
             songTitle.textContent = playlist[currentSongIndex].title;
             
-            // Lưu thông tin bài hát hiện tại vào sessionStorage
             sessionStorage.setItem('current_song_index', currentSongIndex);
             sessionStorage.setItem('current_song_title', playlist[currentSongIndex].title);
             
@@ -1373,17 +1391,14 @@ Anh thương em...`;
                 audio.play().then(() => {
                     updateActivePlaylistItem();
                 }).catch(() => {
-                    // Nếu không thể phát, chờ user tương tác
                     isPlaying = false;
                     playBtn.innerHTML = '<i class="fas fa-play"></i>';
                 });
             }
             
-            // Cập nhật playlist dù có phát hay không
             updateActivePlaylistItem();
         }
 
-        // Render playlist items
         function renderPlaylist() {
             playlistItems.innerHTML = '';
             playlist.forEach((song, index) => {
@@ -1413,7 +1428,6 @@ Anh thương em...`;
             });
         }
 
-        // Update active playlist item
         function updateActivePlaylistItem() {
             const items = document.querySelectorAll('.playlist-item');
             items.forEach((item, index) => {
@@ -1439,7 +1453,6 @@ Anh thương em...`;
             });
         }
 
-        // Playlist panel toggle
         togglePlaylistBtn.addEventListener('click', () => {
             playlistPanel.classList.toggle('show');
         });
@@ -1448,7 +1461,6 @@ Anh thương em...`;
             playlistPanel.classList.remove('show');
         });
 
-        // Close playlist when clicking outside
         document.addEventListener('click', (e) => {
             if (!playlistPanel.contains(e.target) && 
                 !togglePlaylistBtn.contains(e.target) && 
@@ -1457,10 +1469,8 @@ Anh thương em...`;
             }
         });
 
-        // Manual play button
         playMusicManuallyBtn.addEventListener('click', playMusic);
 
-        // Music controls
         playBtn.addEventListener('click', () => {
             if (isPlaying) {
                 pauseMusic();
@@ -1514,11 +1524,9 @@ Anh thương em...`;
             updateActivePlaylistItem();
         });
 
-        // Update playlist when song changes
         audio.addEventListener('play', updateActivePlaylistItem);
         audio.addEventListener('pause', updateActivePlaylistItem);
 
-        // Lắng nghe sự kiện user interaction để bật autoplay
         document.addEventListener('click', () => {
             userInteracted = true;
             if (!isPlaying && audio.paused) {
@@ -1528,15 +1536,15 @@ Anh thương em...`;
 
         // ========== MAIN CONTENT INIT ==========
         function initMainContent() {
-            setupBlurredDates(); // Khởi tạo hiệu ứng blur cho ngày tháng
-            setupCounterReveal(); // Khởi tạo hiệu ứng reveal cho counter
+            setupBlurredElements();
+            setupCounterReveal();
             createHearts();
             loadGallery();
             typeWriter();
             calculateLoveTime();
             setInterval(calculateLoveTime, 1000);
             initMusicPlayer();
-            renderPlaylist(); // Render playlist ngay lập tức
+            renderPlaylist();
         }
 
         // ========== FLOATING HEARTS ==========
@@ -1617,7 +1625,6 @@ Anh thương em...`;
         }
         
         function updateCounterValues(days, hours, minutes, seconds) {
-            // Chỉ cập nhật giá trị, không thay đổi hiệu ứng blur
             document.getElementById('days').textContent = days;
             document.getElementById('hours').textContent = hours;
             document.getElementById('minutes').textContent = minutes;
@@ -1626,5 +1633,3 @@ Anh thương em...`;
     </script>
 </body>
 </html>
-
-
