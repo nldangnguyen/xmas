@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Tất cả CSS giữ nguyên như trước */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -197,63 +196,135 @@
             to { opacity: 1; }
         }
 
-        /* ========== BLURRED DATE STYLES ========== */
-        .blurred-date {
-            filter: blur(5px); /* Giảm từ 100px xuống 5px */
-            position: relative;
-            transition: filter 0.3s ease;
+        /* ========== BLUR PROTECTION STYLES ========== */
+        .blur-protected {
+            filter: blur(8px);
+            transition: filter 0.5s ease;
             cursor: pointer;
             user-select: none;
         }
 
-        .blurred-date:hover {
-            filter: blur(2px);
-        }
-
-        .blurred-date.revealed {
-            filter: blur(0);
-        }
-
-        /* ========== BLURRED LOVE LETTER (NHẸ) ========== */
-        .blurred-letter {
-            filter: blur(8px); /* Chỉ làm mờ nhẹ 8px */
-            position: relative;
-            transition: filter 0.3s ease;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .blurred-letter:hover {
+        .blur-protected:hover {
             filter: blur(4px);
         }
 
-        .blurred-letter.revealed {
-            filter: blur(0); /* Xóa blur khi click */
+        .blur-protected.revealed {
+            filter: blur(0);
         }
 
-        /* Lớp phủ nhẹ để gợi ý */
-        .blurred-letter::after {
-            content: '💌 Click để đọc rõ hơn';
+        .blur-strong {
+            filter: blur(15px);
+            transition: filter 0.5s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .blur-strong:hover {
+            filter: blur(8px);
+        }
+
+        .blur-strong.revealed {
+            filter: blur(0);
+        }
+
+        .blur-hint {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: var(--rose-600);
             font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             text-align: center;
-            opacity: 0.6;
+            opacity: 0;
             pointer-events: none;
             z-index: 2;
             white-space: nowrap;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.9);
             padding: 10px 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease;
         }
 
-        .blurred-letter.revealed::after {
+        .blur-container:hover .blur-hint {
+            opacity: 1;
+        }
+
+        .blur-container.revealed .blur-hint {
             display: none;
+        }
+
+        /* ========== CUSTOM ALERT MODAL ========== */
+        .custom-alert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .custom-alert-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(244, 63, 94, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            border: 3px solid var(--rose-400);
+            animation: slideUp 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-alert-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rose-400), var(--rose-500), var(--rose-400));
+        }
+
+        .custom-alert-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .custom-alert-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--rose-600);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .custom-alert-btn {
+            background: linear-gradient(135deg, var(--rose-400), var(--rose-600));
+            color: white;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(244, 63, 94, 0.2);
+        }
+
+        .custom-alert-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);
         }
 
         /* ========== ENHANCED MUSIC PLAYER ========== */
@@ -484,52 +555,13 @@
             transform: scale(1.1);
         }
 
-        /* Audio autoplay notice */
-        .autoplay-notice {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 2001;
-            background: linear-gradient(135deg, var(--rose-500), var(--rose-600));
-            color: white;
-            padding: 10px 15px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            animation: slideIn 0.3s ease;
-            max-width: 300px;
-            text-align: center;
-            font-size: 0.9rem;
-            display: none;
-        }
-
-        .autoplay-notice.show {
-            display: block;
-        }
-
-        .autoplay-notice button {
-            background: white;
-            color: var(--rose-600);
-            border: none;
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin-top: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .autoplay-notice button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* ========== COUNTER BLUR STYLES ========== */
+        /* ========== COUNTER STYLES ========== */
         .counter-item .value {
             font-family: 'Dancing Script', cursive;
             font-size: 3.5rem;
             color: var(--rose-500);
             font-weight: bold;
-            filter: blur(10px);
+            filter: blur(15px);
             transition: filter 0.5s ease;
             user-select: none;
         }
@@ -591,14 +623,18 @@
             text-align: center;
             width: 100%;
             padding: 0 1rem;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 10px;
         }
         
         .counter-item:hover .hint-text {
-            opacity: 0.8;
+            opacity: 0.9;
         }
         
         .counter-item.revealed .hint-text {
             opacity: 0;
+            display: none;
         }
 
         /* Floating Hearts */
@@ -630,6 +666,11 @@
         @keyframes pulse-glow {
             0%, 100% { transform: scale(1); opacity: 0.3; }
             50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
         /* Hero Section */
@@ -705,11 +746,6 @@
         .heart-icon {
             color: var(--rose-500);
             animation: heartbeat 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
         }
 
         .hero-quote {
@@ -817,7 +853,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: all 0.5s ease;
         }
 
         .gallery-item:hover img { transform: scale(1.1); }
@@ -980,7 +1016,8 @@
             .music-player { top: 10px; right: 10px; }
             .music-controls { padding: 8px 12px; }
             .playlist-panel { width: 280px; right: 10px; }
-            .autoplay-notice { top: 70px; right: 10px; max-width: 250px; }
+            .custom-alert-content { padding: 1.5rem; }
+            .custom-alert-message { font-size: 1.3rem; }
         }
 
         @media (max-width: 480px) {
@@ -1019,12 +1056,6 @@
         <!-- Floating Hearts -->
         <div class="floating-hearts" id="floatingHearts"></div>
 
-        <!-- Autoplay Notice -->
-        <div class="autoplay-notice" id="autoplayNotice">
-            <p>🎵 Nhạc tạm thời bị tắt. Click để phát lại!</p>
-            <button id="playMusicManually">Phát nhạc ngay</button>
-        </div>
-
         <!-- Enhanced Music Player -->
         <div class="music-player">
             <div class="now-playing show" id="nowPlaying">
@@ -1061,9 +1092,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="playlist-items" id="playlistItems">
-                <!-- Playlist items will be generated by JavaScript -->
-            </div>
+            <div class="playlist-items" id="playlistItems"></div>
         </div>
 
         <!-- Audio Element -->
@@ -1073,53 +1102,58 @@
 
         <!-- Hero Section -->
         <section class="hero">
-            <div class="date-range blurred-date">4.12.2025 - 4.1.2026</div>
+            <div class="date-range blur-protected blur-container" onclick="this.classList.toggle('revealed')">
+                4.12.2025 - 4.1.2026
+                <span class="blur-hint">Click để xem</span>
+            </div>
             <h1>Happy Anniversary</h1>
             <div class="couple-names">
                 <span></span>
-                <span class="heart-icon">❤️</span>
+                <span class="heart-icon"></span>
                 <span></span>
             </div>
-            <p class="hero-quote">
+            <div class="hero-quote blur-protected blur-container" onclick="this.classList.toggle('revealed')">
                 "You're my serendipity.<br>
                 I wasn't looking for you.<br>
                 I wasn't expecting you.<br>
                 But I'm very lucky I met you."
-            </p>
-            <div class="scroll-indicator"></div>
+                <span class="blur-hint">💕 Click để đọc</span>
+            </div>
+            <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
         </section>
 
         <!-- Counter Section với blur -->
         <section class="counter">
             <h2>✨ In Love ✨</h2>
             <div class="counter-grid">
-                <div class="counter-item" data-id="days">
+                <div class="counter-item" data-id="days" onclick="revealCounter(this, 'days')">
                     <div class="icon">📅</div>
                     <div class="value" id="days">0</div>
                     <div class="label">Days</div>
-                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu ngày</div>
+                    <div class="hint-text">Click để xem số ngày</div>
                 </div>
-                <div class="counter-item" data-id="hours">
+                <div class="counter-item" data-id="hours" onclick="revealCounter(this, 'hours')">
                     <div class="icon">⏰</div>
                     <div class="value" id="hours">0</div>
                     <div class="label">Hours</div>
-                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu giờ</div>
+                    <div class="hint-text">Click để xem số giờ</div>
                 </div>
-                <div class="counter-item" data-id="minutes">
+                <div class="counter-item" data-id="minutes" onclick="revealCounter(this, 'minutes')">
                     <div class="icon">⏱️</div>
                     <div class="value" id="minutes">0</div>
                     <div class="label">Minutes</div>
-                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu phút</div>
+                    <div class="hint-text">Click để xem số phút</div>
                 </div>
-                <div class="counter-item" data-id="seconds">
+                <div class="counter-item" data-id="seconds" onclick="revealCounter(this, 'seconds')">
                     <div class="icon">💓</div>
                     <div class="value" id="seconds">0</div>
                     <div class="label">Seconds</div>
-                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu giây</div>
+                    <div class="hint-text">Click để xem số giây</div>
                 </div>
             </div>
-            <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;" class="blurred-date">
+            <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;" class="blur-protected blur-container" onclick="this.classList.toggle('revealed')">
                 Started: December 4th, 2025 at 23:00
+                <span class="blur-hint">Click để xem</span>
             </p>
         </section>
 
@@ -1129,11 +1163,15 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </section>
 
-        <!-- Love Letter Section với blur nhẹ -->
+        <!-- Love Letter Section với blur -->
         <section class="love-letter">
-            <h2>💌 My Dearest Thoughts 💌</h2>
-            <div class="letter-card blurred-letter" id="loveLetter">
-                <div class="letter-content" id="typedText"></div>
+            <h2>💌 For You, My Love 💌</h2>
+            <div class="letter-card blur-protected blur-container" id="loveLetter" onclick="revealLetter()">
+                <div class="letter-content" id="typedText">
+                    <div style="display: flex; align-items: center; justify-content: center; height: 300px;">
+                        <span style="font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: var(--rose-600);">💌 Click để đọc thư tình</span>
+                    </div>
+                </div>
                 <div class="signature">
                     With all my love,<br>
                     Anh Nguyên
@@ -1151,7 +1189,7 @@
 
     <script>
         // ========== CẤU HÌNH ==========
-        const correctPassword = "041225"; // ĐỔI MẬT KHẨU TẠI ĐÂY
+        const correctPassword = "041225";
 
         // Danh sách nhạc
         const playlist = [
@@ -1164,7 +1202,7 @@
             { title: "Until You", src: "Until You.mp3" },
         ];
 
-        // Danh sách ảnh
+        // Danh sách ảnh (với blur)
         const myImages = [
             { url: "https://i.postimg.cc/K88X5c78/1.jpg", date: "4.11.2025", caption: "" },
             { url: "https://i.postimg.cc/wjjKkx5X/2.jpg", date: "22.11.2025", caption: "" },
@@ -1173,9 +1211,12 @@
         ];
 
         // Lời nhắn
-        const message = `Em yêu ơi,<br><br>
-Thật khó tin khi đã một tháng trôi qua kể từ ngày chúng ta chính thức bắt đầu hành trình yêu nhau. Một tháng có thể chưa đủ dài để anh hiểu hết về em, nhưng đủ để anh biết mình muốn dành nhiều tháng hơn nữa ở bên em.<br><br>
-Mong rằng mỗi tháng trôi qua, tình yêu của chúng ta không chỉ lớn lên, mà còn ấm áp và bình yên hơn nữa.<br><br>
+        const message = `Em yêu ơi,
+
+Thật khó tin khi đã một tháng trôi qua kể từ ngày chúng ta chính thức bắt đầu hành trình yêu nhau. Một tháng có thể chưa đủ dài để anh hiểu hết về em, nhưng đủ để anh biết mình muốn dành nhiều tháng hơn nữa ở bên em.
+
+Mong rằng mỗi tháng trôi qua, tình yêu của chúng ta không chỉ lớn lên, mà còn ấm áp và bình yên hơn nữa.
+
 Anh thương em...`;
 
         // ========== PASSWORD GATE ==========
@@ -1186,8 +1227,10 @@ Anh thương em...`;
         const errorMessage = document.getElementById('errorMessage');
         const lockIcon = document.getElementById('lockIcon');
 
-        let currentSongIndex = parseInt(sessionStorage.getItem('current_song_index')) || 0;
-        let currentSongTitle = sessionStorage.getItem('current_song_title') || playlist[0].title;
+        let currentSongIndex = 0;
+        let revealedCounters = {};
+        let letterRevealed = false;
+        let isTyping = false;
 
         if (sessionStorage.getItem('anniversary_unlocked') === 'true') {
             passwordGate.classList.add('hidden');
@@ -1218,417 +1261,270 @@ Anh thương em...`;
             }
         });
 
-        // ========== BLURRED DATES & LOVE LETTER FUNCTIONALITY ==========
-        function setupBlurredElements() {
-            const blurredDates = document.querySelectorAll('.blurred-date');
-            const blurredLetter = document.querySelector('.blurred-letter');
+        // ========== COUNTER REVEAL ==========
+        function revealCounter(element, id) {
+            if (element.classList.contains('revealed')) return;
             
-            // Xử lý cho dates
-            blurredDates.forEach(el => {
-                el.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    this.classList.toggle('revealed');
-                });
+            element.classList.add('revealed');
+            revealedCounters[id] = true;
+
+            const messages = {
+                'days': 'Wow! Đã yêu nhau được nhiều ngày thế này rồi sao?',
+                'hours': 'Mỗi giờ bên em đều thật đáng giá!',
+                'minutes': 'Từng phút giây đều là kỷ niệm đẹp!',
+                'seconds': 'Yêu em nhiều hơn mỗi giây trôi qua!'
+            };
+
+            createCustomAlert(messages[id]);
+
+            // Check if all revealed
+            if (Object.keys(revealedCounters).length === 4) {
+                setTimeout(() => {
+                    const days = document.getElementById('days').textContent;
+                    const hours = document.getElementById('hours').textContent;
+                    const minutes = document.getElementById('minutes').textContent;
+                    const seconds = document.getElementById('seconds').textContent;
+                    createCustomAlert(`💕 Em đã khám phá hết! Chúng mình yêu nhau được ${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây rồi đó!`);
+                }, 1500);
+            }
+        }
+
+        // ========== LOVE LETTER REVEAL ==========
+        function revealLetter() {
+            const letterCard = document.getElementById('loveLetter');
+            const typedText = document.getElementById('typedText');
+            
+            if (letterRevealed) return;
+            
+            letterCard.classList.add('revealed');
+            letterRevealed = true;
+            
+            // Start typing effect
+            typedText.innerHTML = '';
+            let index = 0;
+            isTyping = true;
+
+            function typeChar() {
+                if (index < message.length) {
+                    let char = message[index];
+                    if (char === '\n') {
+                        typedText.innerHTML += '<br>';
+                    } else {
+                        typedText.innerHTML += char;
+                    }
+                    index++;
+                    setTimeout(typeChar, 30);
+                } else {
+                    isTyping = false;
+                }
+            }
+
+            typeChar();
+        }
+
+        // ========== CUSTOM ALERT ==========
+        function createCustomAlert(message) {
+            let existingModal = document.querySelector('.custom-alert-modal');
+            if (existingModal) existingModal.remove();
+            
+            const modal = document.createElement('div');
+            modal.className = 'custom-alert-modal';
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'custom-alert-content';
+            
+            const icon = document.createElement('div');
+            icon.className = 'custom-alert-icon';
+            
+            if (message.includes('Wow') || message.includes('khám phá')) icon.innerHTML = '🎉';
+            else if (message.includes('giờ')) icon.innerHTML = '⏰';
+            else if (message.includes('phút')) icon.innerHTML = '💖';
+            else if (message.includes('giây')) icon.innerHTML = '💓';
+            else icon.innerHTML = '💕';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'custom-alert-message';
+            messageDiv.textContent = message;
+            
+            const okButton = document.createElement('button');
+            okButton.className = 'custom-alert-btn';
+            okButton.textContent = 'OK 💖';
+            okButton.onclick = () => modal.remove();
+            
+            modalContent.appendChild(icon);
+            modalContent.appendChild(messageDiv);
+            modalContent.appendChild(okButton);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+        }
+
+        // ========== INIT MAIN CONTENT ==========
+        function initMainContent() {
+            createFloatingHearts();
+            initGallery();
+            initCounter();
+            initMusicPlayer();
+            initPlaylist();
+        }
+
+        // ========== FLOATING HEARTS ==========
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '🌹'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('span');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (6 + Math.random() * 4) + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // ========== GALLERY (với blur) ==========
+        function initGallery() {
+            const grid = document.getElementById('galleryGrid');
+            
+            myImages.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${img.url}" alt="${img.caption}" class="blur-protected" onclick="event.stopPropagation(); this.classList.toggle('revealed')">
+                    <div class="gallery-caption">
+                        <p style="font-size: 0.8rem; opacity: 0.8;">${img.date}</p>
+                        <p>${img.caption}</p>
+                    </div>
+                    <div style="position: absolute; top: 10px; right: 10px; font-size: 1.2rem;"></div>
+                `;
+                grid.appendChild(item);
             });
+        }
+
+        // ========== COUNTER ==========
+        function initCounter() {
+            const startDate = new Date('2025-12-04T23:00:00');
             
-            // Xử lý cho love letter (mờ nhẹ)
-            if (blurredLetter) {
-                blurredLetter.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    this.classList.toggle('revealed');
-                });
+            function updateCounter() {
+                const now = new Date();
+                const diff = now - startDate;
+                
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('days').textContent = days;
+                    document.getElementById('hours').textContent = hours;
+                    document.getElementById('minutes').textContent = minutes;
+                    document.getElementById('seconds').textContent = seconds;
+                }
             }
             
-            // Click ra ngoài để ẩn tất cả
-            document.addEventListener('click', function() {
-                blurredDates.forEach(el => {
-                    el.classList.remove('revealed');
-                });
-                if (blurredLetter) {
-                    blurredLetter.classList.remove('revealed');
-                }
-            });
+            updateCounter();
+            setInterval(updateCounter, 1000);
         }
 
-        // ========== COUNTER REVEAL FUNCTIONALITY ==========
-        function setupCounterReveal() {
-            const counterItems = document.querySelectorAll('.counter-item');
-            let revealedItems = new Set();
-            
-            counterItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    
-                    const id = this.getAttribute('data-id');
-                    const valueElement = this.querySelector('.value');
-                    
-                    if (this.classList.contains('revealed')) {
-                        return;
-                    }
-                    
-                    this.classList.add('revealed');
-                    revealedItems.add(id);
-                    
-                    valueElement.style.transition = 'filter 0.8s ease';
-                    setTimeout(() => {
-                        valueElement.style.filter = 'blur(0)';
-                    }, 10);
-                    
-                    const messages = {
-                        'days': '🎉 Wow! Đã yêu nhau được nhiều ngày thế này rồi sao?',
-                        'hours': '⏰ Mỗi giờ bên em đều thật đáng giá!',
-                        'minutes': '💖 Từng phút giây đều là kỷ niệm đẹp!',
-                        'seconds': '💓 Yêu em nhiều hơn mỗi giây trôi qua!'
-                    };
-                    
-                    if (messages[id]) {
-                        setTimeout(() => {
-                            alert(messages[id]);
-                        }, 300);
-                    }
-                    
-                    if (revealedItems.size === 4) {
-                        setTimeout(() => {
-                            alert('💕 Em đã khám phá hết tất cả! Chúng mình đã yêu nhau được ' + 
-                                  document.getElementById('days').textContent + ' ngày ' +
-                                  document.getElementById('hours').textContent + ' giờ ' +
-                                  document.getElementById('minutes').textContent + ' phút ' +
-                                  document.getElementById('seconds').textContent + ' giây rồi đó!');
-                        }, 500);
-                    }
-                });
-            });
-        }
-
-        // ========== ENHANCED MUSIC PLAYER ==========
+        // ========== MUSIC PLAYER ==========
         const audio = document.getElementById('backgroundMusic');
         const playBtn = document.getElementById('playBtn');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const muteBtn = document.getElementById('muteBtn');
         const volumeSlider = document.getElementById('volumeSlider');
-        const nowPlaying = document.getElementById('nowPlaying');
         const songTitle = document.getElementById('songTitle');
         const togglePlaylistBtn = document.getElementById('togglePlaylist');
         const closePlaylistBtn = document.getElementById('closePlaylist');
         const playlistPanel = document.getElementById('playlistPanel');
         const playlistItems = document.getElementById('playlistItems');
-        const autoplayNotice = document.getElementById('autoplayNotice');
-        const playMusicManuallyBtn = document.getElementById('playMusicManually');
 
         let isPlaying = false;
-        let isMuted = false;
-        let lastVolume = 50;
-        let userInteracted = false;
 
         function initMusicPlayer() {
             audio.volume = volumeSlider.value / 100;
+            loadSong(0);
             
-            songTitle.textContent = currentSongTitle;
-            nowPlaying.classList.add('show');
+            playBtn.onclick = togglePlay;
+            prevBtn.onclick = prevSong;
+            nextBtn.onclick = nextSong;
+            muteBtn.onclick = toggleMute;
+            volumeSlider.oninput = () => { audio.volume = volumeSlider.value / 100; };
+            togglePlaylistBtn.onclick = () => playlistPanel.classList.toggle('show');
+            closePlaylistBtn.onclick = () => playlistPanel.classList.remove('show');
             
-            loadSong(currentSongIndex, false);
-            
-            attemptAutoplay();
-            
-            if (sessionStorage.getItem('music_was_playing') === 'true') {
-                setTimeout(() => {
-                    playMusic();
-                }, 1000);
-            }
+            audio.onended = nextSong;
         }
 
-        function attemptAutoplay() {
-            const playPromise = audio.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    isPlaying = true;
-                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    nowPlaying.classList.add('show');
-                    autoplayNotice.classList.remove('show');
-                    sessionStorage.setItem('music_was_playing', 'true');
-                }).catch(() => {
-                    isPlaying = false;
-                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                });
-            }
-        }
-
-        function playMusic() {
-            userInteracted = true;
-            audio.play().then(() => {
-                isPlaying = true;
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                nowPlaying.classList.add('show');
-                autoplayNotice.classList.remove('show');
-                sessionStorage.setItem('music_was_playing', 'true');
-                updateActivePlaylistItem();
-            }).catch(error => {
-                autoplayNotice.classList.add('show');
-            });
-        }
-
-        function pauseMusic() {
-            audio.pause();
-            isPlaying = false;
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            sessionStorage.setItem('music_was_playing', 'false');
-        }
-
-        function loadSong(index, autoPlay = true) {
-            if (index < 0) index = playlist.length - 1;
-            if (index >= playlist.length) index = 0;
-            
+        function loadSong(index) {
             currentSongIndex = index;
-            audio.src = playlist[currentSongIndex].src;
-            songTitle.textContent = playlist[currentSongIndex].title;
-            
-            sessionStorage.setItem('current_song_index', currentSongIndex);
-            sessionStorage.setItem('current_song_title', playlist[currentSongIndex].title);
-            
-            if (autoPlay && isPlaying) {
-                audio.play().then(() => {
-                    updateActivePlaylistItem();
-                }).catch(() => {
-                    isPlaying = false;
-                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                });
-            }
-            
-            updateActivePlaylistItem();
+            audio.src = playlist[index].src;
+            songTitle.textContent = playlist[index].title;
+            updatePlaylistUI();
         }
 
-        function renderPlaylist() {
-            playlistItems.innerHTML = '';
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            loadSong(currentSongIndex);
+            if (isPlaying) audio.play();
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(currentSongIndex);
+            if (isPlaying) audio.play();
+        }
+
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            muteBtn.innerHTML = audio.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+        }
+
+        // ========== PLAYLIST ==========
+        function initPlaylist() {
             playlist.forEach((song, index) => {
                 const item = document.createElement('div');
-                item.className = `playlist-item ${index === currentSongIndex ? 'active' : ''}`;
-                item.dataset.index = index;
-                
+                item.className = 'playlist-item' + (index === currentSongIndex ? ' active' : '');
                 item.innerHTML = `
-                    <div class="playlist-item-number">${index + 1}</div>
+                    <span class="playlist-item-number">${index + 1}</span>
                     <div class="playlist-item-info">
                         <div class="playlist-item-title">${song.title}</div>
-                        ${index === currentSongIndex && isPlaying ? 
-                            '<div class="playlist-item-playing">🎵 Đang phát</div>' : 
-                            ''}
                     </div>
+                    ${index === currentSongIndex ? '<span class="playlist-item-playing">♪</span>' : ''}
                 `;
-                
-                item.addEventListener('click', () => {
+                item.onclick = () => {
                     loadSong(index);
-                    if (!isPlaying) {
-                        playMusic();
-                    }
-                    updateActivePlaylistItem();
-                });
-                
+                    if (!isPlaying) togglePlay();
+                };
                 playlistItems.appendChild(item);
             });
         }
 
-        function updateActivePlaylistItem() {
-            const items = document.querySelectorAll('.playlist-item');
+        function updatePlaylistUI() {
+            const items = playlistItems.querySelectorAll('.playlist-item');
             items.forEach((item, index) => {
-                if (index === currentSongIndex) {
-                    item.classList.add('active');
-                    const playingIndicator = item.querySelector('.playlist-item-playing');
-                    if (playingIndicator) {
-                        playingIndicator.textContent = isPlaying ? '🎵 Đang phát' : '⏸️ Đã tạm dừng';
-                    } else if (isPlaying) {
-                        const infoDiv = item.querySelector('.playlist-item-info');
-                        const playingDiv = document.createElement('div');
-                        playingDiv.className = 'playlist-item-playing';
-                        playingDiv.textContent = '🎵 Đang phát';
-                        infoDiv.appendChild(playingDiv);
-                    }
-                } else {
-                    item.classList.remove('active');
-                    const playingIndicator = item.querySelector('.playlist-item-playing');
-                    if (playingIndicator) {
-                        playingIndicator.remove();
-                    }
+                item.className = 'playlist-item' + (index === currentSongIndex ? ' active' : '');
+                const playingIcon = item.querySelector('.playlist-item-playing');
+                if (index === currentSongIndex && !playingIcon) {
+                    item.innerHTML += '<span class="playlist-item-playing">♪</span>';
+                } else if (index !== currentSongIndex && playingIcon) {
+                    playingIcon.remove();
                 }
             });
-        }
-
-        togglePlaylistBtn.addEventListener('click', () => {
-            playlistPanel.classList.toggle('show');
-        });
-
-        closePlaylistBtn.addEventListener('click', () => {
-            playlistPanel.classList.remove('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!playlistPanel.contains(e.target) && 
-                !togglePlaylistBtn.contains(e.target) && 
-                !e.target.closest('.playlist-item')) {
-                playlistPanel.classList.remove('show');
-            }
-        });
-
-        playMusicManuallyBtn.addEventListener('click', playMusic);
-
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                pauseMusic();
-            } else {
-                playMusic();
-            }
-            updateActivePlaylistItem();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            loadSong(currentSongIndex - 1);
-            updateActivePlaylistItem();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            loadSong(currentSongIndex + 1);
-            updateActivePlaylistItem();
-        });
-
-        volumeSlider.addEventListener('input', () => {
-            const volume = volumeSlider.value / 100;
-            audio.volume = volume;
-            lastVolume = volumeSlider.value;
-            
-            if (volume === 0) {
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            } else if (volume < 0.5) {
-                muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-            } else {
-                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-            }
-        });
-
-        muteBtn.addEventListener('click', () => {
-            if (isMuted) {
-                audio.volume = lastVolume / 100;
-                volumeSlider.value = lastVolume;
-                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                isMuted = false;
-            } else {
-                lastVolume = volumeSlider.value;
-                audio.volume = 0;
-                volumeSlider.value = 0;
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                isMuted = true;
-            }
-        });
-
-        audio.addEventListener('ended', () => {
-            loadSong(currentSongIndex + 1);
-            updateActivePlaylistItem();
-        });
-
-        audio.addEventListener('play', updateActivePlaylistItem);
-        audio.addEventListener('pause', updateActivePlaylistItem);
-
-        document.addEventListener('click', () => {
-            userInteracted = true;
-            if (!isPlaying && audio.paused) {
-                playMusic();
-            }
-        });
-
-        // ========== MAIN CONTENT INIT ==========
-        function initMainContent() {
-            setupBlurredElements();
-            setupCounterReveal();
-            createHearts();
-            loadGallery();
-            typeWriter();
-            calculateLoveTime();
-            setInterval(calculateLoveTime, 1000);
-            initMusicPlayer();
-            renderPlaylist();
-        }
-
-        // ========== FLOATING HEARTS ==========
-        function createHearts() {
-            const container = document.getElementById('floatingHearts');
-            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘'];
-            
-            for (let i = 0; i < 25; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                heart.style.animationDelay = Math.random() * 8 + 's';
-                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                heart.style.opacity = Math.random() * 0.4 + 0.3;
-                container.appendChild(heart);
-            }
-        }
-
-        // ========== GALLERY ==========
-        function loadGallery() {
-            const galleryGrid = document.getElementById('galleryGrid');
-            
-            myImages.forEach((imageData) => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                
-                galleryItem.innerHTML = `
-                    <img src="${imageData.url}" alt="${imageData.caption}">
-                    <div class="gallery-caption">${imageData.caption}<br>${imageData.date}</div>
-                `;
-                
-                galleryGrid.appendChild(galleryItem);
-            });
-        }
-
-        // ========== TYPEWRITER ==========
-        function typeWriter() {
-            const typedTextElement = document.getElementById('typedText');
-            let charIndex = 0;
-            
-            function typing() {
-                if (charIndex < message.length) {
-                    typedTextElement.innerHTML = message.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
-                    charIndex++;
-                    
-                    let delay = 50;
-                    const currentChar = message.charAt(charIndex - 1);
-                    if (currentChar === '.' || currentChar === '!' || currentChar === '?') delay = 300;
-                    
-                    setTimeout(typing, delay);
-                } else {
-                    typedTextElement.innerHTML = message;
-                }
-            }
-            
-            setTimeout(typing, 1500);
-        }
-
-        // ========== LOVE COUNTER ==========
-        function calculateLoveTime() {
-            const loveStartDate = new Date('2025-12-04T23:00:00');
-            const now = new Date();
-            const diff = now - loveStartDate;
-            
-            if (diff < 0) {
-                updateCounterValues('0', '0', '0', '0');
-                return;
-            }
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            updateCounterValues(days, hours, minutes, seconds);
-        }
-        
-        function updateCounterValues(days, hours, minutes, seconds) {
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
-            document.getElementById('seconds').textContent = seconds;
         }
     </script>
 </body>
