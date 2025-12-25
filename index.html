@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Tất cả CSS giữ nguyên như trước */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -292,7 +293,10 @@
             display: none;
         }
 
-        .now-playing.show { display: block; animation: slideIn 0.3s ease; }
+        .now-playing.show { 
+            display: block; 
+            animation: slideIn 0.3s ease; 
+        }
 
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(20px); }
@@ -438,7 +442,7 @@
             transform: scale(1.1);
         }
 
-        /* Audio autoplay notice */
+        /* Audio autoplay notice - CHỈNH SỬA */
         .autoplay-notice {
             position: fixed;
             top: 80px;
@@ -449,11 +453,11 @@
             padding: 10px 15px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            display: none;
             animation: slideIn 0.3s ease;
             max-width: 300px;
             text-align: center;
             font-size: 0.9rem;
+            display: none; /* Mặc định ẩn */
         }
 
         .autoplay-notice.show {
@@ -981,7 +985,8 @@
 
         <!-- Enhanced Music Player -->
         <div class="music-player">
-            <div class="now-playing" id="nowPlaying">
+            <!-- CHỈNH SỬA: Hiển thị now-playing LUÔN LUÔN -->
+            <div class="now-playing show" id="nowPlaying">
                 <i class="fas fa-music" style="margin-right: 5px;"></i>
                 <span id="songTitle">Only Love</span>
             </div>
@@ -1143,6 +1148,10 @@ Anh thương em...`;
         const errorMessage = document.getElementById('errorMessage');
         const lockIcon = document.getElementById('lockIcon');
 
+        // THÊM: Lưu current song index vào sessionStorage
+        let currentSongIndex = parseInt(sessionStorage.getItem('current_song_index')) || 0;
+        let currentSongTitle = sessionStorage.getItem('current_song_title') || playlist[0].title;
+
         if (sessionStorage.getItem('anniversary_unlocked') === 'true') {
             passwordGate.classList.add('hidden');
             mainContent.classList.add('visible');
@@ -1278,7 +1287,6 @@ Anh thương em...`;
         const autoplayNotice = document.getElementById('autoplayNotice');
         const playMusicManuallyBtn = document.getElementById('playMusicManually');
 
-        let currentSongIndex = 0;
         let isPlaying = false;
         let isMuted = false;
         let lastVolume = 50;
@@ -1286,14 +1294,22 @@ Anh thương em...`;
 
         function initMusicPlayer() {
             audio.volume = volumeSlider.value / 100;
-            loadSong(0);
+            
+            // CHỈNH SỬA: Luôn hiển thị tiêu đề bài hát hiện tại
+            songTitle.textContent = currentSongTitle;
+            nowPlaying.classList.add('show'); // Đảm bảo hiển thị
+            
+            // Load bài hát từ sessionStorage
+            loadSong(currentSongIndex, false); // false = không tự động phát
             
             // Thử phát nhạc tự động
             attemptAutoplay();
             
             // Lưu trạng thái phát nhạc vào sessionStorage
             if (sessionStorage.getItem('music_was_playing') === 'true') {
-                playMusic();
+                setTimeout(() => {
+                    playMusic();
+                }, 1000);
             }
         }
 
@@ -1313,14 +1329,7 @@ Anh thương em...`;
                     console.log("Autoplay bị block bởi trình duyệt");
                     isPlaying = false;
                     playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                    autoplayNotice.classList.add('show');
-                    
-                    // Hiển thị thông báo trong 10 giây
-                    setTimeout(() => {
-                        if (!userInteracted) {
-                            autoplayNotice.classList.add('show');
-                        }
-                    }, 1000);
+                    // KHÔNG hiện thông báo autoplay ngay lập tức
                 });
             }
         }
@@ -1336,6 +1345,7 @@ Anh thương em...`;
                 updateActivePlaylistItem();
             }).catch(error => {
                 console.log("Lỗi phát nhạc:", error);
+                // Hiển thị thông báo khi người dùng cố gắng play nhưng không được
                 autoplayNotice.classList.add('show');
             });
         }
@@ -1347,7 +1357,7 @@ Anh thương em...`;
             sessionStorage.setItem('music_was_playing', 'false');
         }
 
-        function loadSong(index) {
+        function loadSong(index, autoPlay = true) {
             if (index < 0) index = playlist.length - 1;
             if (index >= playlist.length) index = 0;
             
@@ -1355,7 +1365,11 @@ Anh thương em...`;
             audio.src = playlist[currentSongIndex].src;
             songTitle.textContent = playlist[currentSongIndex].title;
             
-            if (isPlaying) {
+            // Lưu thông tin bài hát hiện tại vào sessionStorage
+            sessionStorage.setItem('current_song_index', currentSongIndex);
+            sessionStorage.setItem('current_song_title', playlist[currentSongIndex].title);
+            
+            if (autoPlay && isPlaying) {
                 audio.play().then(() => {
                     updateActivePlaylistItem();
                 }).catch(() => {
@@ -1364,6 +1378,9 @@ Anh thương em...`;
                     playBtn.innerHTML = '<i class="fas fa-play"></i>';
                 });
             }
+            
+            // Cập nhật playlist dù có phát hay không
+            updateActivePlaylistItem();
         }
 
         // Render playlist items
@@ -1519,7 +1536,7 @@ Anh thương em...`;
             calculateLoveTime();
             setInterval(calculateLoveTime, 1000);
             initMusicPlayer();
-            renderPlaylist();
+            renderPlaylist(); // Render playlist ngay lập tức
         }
 
         // ========== FLOATING HEARTS ==========
@@ -1609,5 +1626,3 @@ Anh thương em...`;
     </script>
 </body>
 </html>
-
-
